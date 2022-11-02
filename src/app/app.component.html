@@ -1,24 +1,28 @@
 <h1 style="text-align: center;">My Task List</h1>
 <div id="task-list">
   <h3 *ngIf="tasks.length == 0">You have no tasks. Please add some below.</h3>
-  Filter: <input [(ngModel)]="filteredText" type="text" />
+  <div *ngIf="tasks.length > 0">
+    Filter:
+    <input [(ngModel)]="filteredText" type="text" style="margin-bottom: 1rem" />
+  </div>
+
   <div class="task" *ngFor="let t of filteredTaskList(); let i = index">
     <div [ngClass]="{'complete' : t.completed}">{{ i + 1 }}. {{ t.task }}</div>
     <div class="task-controls">
       <div *ngIf="!t.completed" (click)="completeTask(t)">
-        <fa-icon [icon]="checkmarkIcon"></fa-icon>
+        <fa-icon [icon]="checkmarkIcon" [ngStyle]="{'color':'green'}"></fa-icon>
       </div>
       <div *ngIf="t.completed" (click)="completeTask(t)">
-        <fa-icon [icon]="redoIcon"></fa-icon>
+        <fa-icon [icon]="redoIcon" [ngStyle]="{'color':'orange'}"></fa-icon>
       </div>
       <div (click)="removeTask(i)">
-        <fa-icon [icon]="deleteIcon"></fa-icon>
+        <fa-icon [icon]="deleteIcon" [ngStyle]="{'color':'red'}"></fa-icon>
       </div>
     </div>
   </div>
-
+  <br />
   Add Task: <input [(ngModel)]="taskText" (keyup.enter)="addTask()" />
-  <button (click)="addTask()">Add Task</button>
+  <button (click)="addTask()" style="margin-left: 1rem">Add Task</button>
 </div>
 
 <h2 *ngIf="allTasksFinished" style="text-align: center;">
